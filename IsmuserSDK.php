@@ -10,7 +10,7 @@ class IsmuserSDK {
 
     private $api_key;
     private $api_secret;
-    private $server_url;
+    private $server_url;    
 
     public function __construct($api_key = API_Config::API_KEY, $api_secret = API_Config::API_SECRET) {
         $this->api_key = $api_key;
@@ -18,13 +18,11 @@ class IsmuserSDK {
         $this->server_url= API_Config::API_SERVER;
     }
     
-    public function createRoom($location='', $properties=array()) {
-        $properties["location"] = $location;
-        $properties["api_key"] = $this->api_key;
+    public function createRoom($properties=array()) {        
+        $properties["api_key"] = $this->api_key;        
+        $createRoomResult = $this->_do_request("/room/create", $properties);        
 
-        $createRoomResult = $this->_do_request("/room/create", $properties);
-
-        return new IsmuserRoom($createRoomResult);
+        return new IsmuserRoom($createRoomResult, $properties);
     }
 
     protected function _do_request($url, $data) {
