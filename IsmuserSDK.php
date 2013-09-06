@@ -30,6 +30,7 @@ class IsmuserSDK {
 
         $dataString = "";
         foreach($data as $key => $value){
+            if ( gettype($value) == "boolean" ) $value = ($value) ? 'true' : 'false';
             $value = urlencode($value);
             $dataString .= "$key=$value&";
         }
